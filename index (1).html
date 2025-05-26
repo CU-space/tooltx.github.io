@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dự đoán Tài/Xỉu từ MD5</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+    .credit {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+    h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="credit">Cre: cao cuong</div>
+    <h2>🔮 Dự đoán Tài/Xỉu từ MD5</h2>
+    <input id="md5Input" type="text" placeholder="Nhập mã MD5 (32 ký tự hex)" />
+    <button onclick="predict()">Dự đoán</button>
+    <div class="result" id="output"></div>
+  </div>
+
+  <script>
+    function md5_to_dice(md5) {
+      const dice = [];
+      for (let i = 0; i < 6; i += 2) {
+        const hex = md5.slice(i, i + 2);
+        const num = parseInt(hex, 16);
+        dice.push((num % 6) + 1);
+      }
+      return dice;
+    }
+
+    function judge_result(dice) {
+      const total = dice.reduce((a, b) => a + b, 0);
+      if (dice[0] === dice[1] && dice[1] === dice[2]) return "🎯 Bộ ba";
+      if (total >= 11 && total <= 17) return "🔥 Tài";
+      if (total >= 4 && total <= 10) return "❄️ Xỉu";
+      return "❌ Không hợp lệ";
+    }
+
+    function predict() {
+      const md5 = document.getElementById('md5Input').value.trim().toLowerCase();
+      const output = document.getElementById('output');
+
+      if (md5.length !== 32 || !/^[0-9a-f]{32}$/.test(md5)) {
+        output.textContent = "❌ Mã MD5 không hợp lệ!";
+        return;
+      }
+
+      const dice = md5_to_dice(md5);
+      const result = judge_result(dice);
+      output.innerHTML = `🎲 Xúc xắc: [${dice.join(', ')}] <br> ✅ Kết quả: <strong>${result}</strong>`;
+    }
+  </script>
+</body>
+</html>
