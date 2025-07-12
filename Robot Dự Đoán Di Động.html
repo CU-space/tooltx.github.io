@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://htdd.site/toolsunwinpromax.html -->
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robot Dự Đoán Di Động</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #121212, #1f1f2b);
+      color: white;
+      overflow: hidden;
+    }
+    .draggable-box {
+      position: fixed;
+      top: 50px;
+      left: 50px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 9999;
+      touch-action: none;
+    }
+    .robot-container {
+      width: 68px;
+      height: 68px;
+      animation: floatRobot 2.8s ease-in-out infinite;
+      position: relative;
+    }
+    .robot-avatar {
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: -5px;
+      left: -15px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+      line-height: 1;
+      text-shadow:
+        -0.5px -0.5px 0 white,
+        0.5px -0.5px 0 white,
+        -0.5px 0.5px 0 white,
+        0.5px 0.5px 0 white;
+    }
+    .prediction-box {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: 16px;
+      min-width: 130px;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transition: 0.3s ease;
+    }
+    .session-info {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .confidence {
+      font-size: 12px;
+      margin-top: 6px;
+      color: #ddd;
+    }
+    @keyframes floatRobot {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @media (max-width: 600px) {
+      .draggable-box { top: 12px; left: 12px; }
+      .robot-container { width: 55px; height: 55px; }
+      .prediction-box { padding: 10px 12px; font-size: 13px; }
+      .session-info { font-size: 13px; }
+      .confidence { font-size: 11px; }
+    }
+    .loading-dot::after {
+      content: '...';
+      animation: dots 2.5s steps(3, end) infinite;
+    }
+    @keyframes dots {
+      0% { content: ''; }
+      33% { content: '.'; }
+      66% { content: '..'; }
+      100% { content: '...'; }
+    }
+
+    #auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+    }
+    .auth-box {
+      background: #1f1f2b;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+      color: white;
+    }
+    .auth-box input {
+      padding: 8px;
+      width: 80%;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+    }
+    .auth-box button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      border: none;
+      background: linear-gradient(to right, #4f46e5, #6366f1);
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+  <div class="auth-box">
+    <h2>Nhập Key</h2>
+    <input type="text" id="keyInput" placeholder="Nhập key hợp lệ...">
+    <button onclick="validateKey()">Xác nhận</button>
+    <p id="authError" style="color: red; margin-top: 10px;"></p>
+  </div>
+</div>
+
+<div class="draggable-box" id="dragBox">
+  <button class="close-btn" onclick="document.getElementById(&#39;dragBox&#39;).style.display=&#39;none&#39;">×</button>
+  <div class="robot-container">
+    <img src="./Robot Dự Đoán Di Động_files/robot_icon.png" alt="Robot" class="robot-avatar">
+  </div>
+  <div class="prediction-box" id="predictionBox">
+    <div class="session-info" id="session-info-text">
+      Xin chào!<br>Tôi là robot dự đoán.
+    </div>
+    <div class="confidence" id="confidence-box" style="display: none;">
+      Độ tin cậy: <span id="confidence">--%</span>
+    </div>
+  </div>
+</div>
+
+<iframe id="sunwin-game-iframe" src="./Robot Dự Đoán Di Động_files/saved_resource.html" frameborder="0" allowfullscreen="" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 1;"></iframe>
+
+
+
+
+
+
+
+
+</body></html>
